@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- res/layout/action_bar_layout.xml -->
+    <LinearLayout
+        android:layout_width="416dp"
+        android:layout_height="78dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-3dp">
+
+        <!-- Logo or App Icon on the left -->
+
+        <!-- Spacer to align to the left -->
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="136dp"
+            android:layout_height="59dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/home_icon" />
+
+        <!--        <Space-->
+        <!--            android:layout_width="16dp"-->
+        <!--            android:layout_height="wrap_content" />-->
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
