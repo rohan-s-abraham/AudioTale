@@ -50,10 +50,10 @@
 
             <!-- Full Name Input -->
             <EditText
-                android:id="@+id/fullNameEditText"
+                android:id="@+id/usernameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Full Name"
+                android:hint="Name"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
                 android:textColor="@android:color/white"

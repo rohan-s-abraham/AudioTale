@@ -1,6 +1,7 @@
 package com.example.audiotale;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -17,7 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
-
+import android.widget.Toast;
 
 
 //import androidx.appcompat.app.AppCompatActivity;
@@ -157,5 +158,19 @@ public class HomeActivity extends AppCompatActivity {
 
     private void logout() {
         // Handle logout functionality here
+        // Clear any saved session data, if you’re using SharedPreferences for user session management
+        SharedPreferences preferences = getSharedPreferences("user_session", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear(); // Remove all session data
+        editor.apply();
+
+        // Show a message confirming logout
+        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+        // Redirect to LoginActivity and clear activity stack to prevent the user from returning with the back button
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // Finish current activity
     }
 }
