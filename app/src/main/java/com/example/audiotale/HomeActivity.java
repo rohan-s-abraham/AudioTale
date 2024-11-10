@@ -145,8 +145,8 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_profile) {
             // Navigate to Profile Activity
-            //Intent intent = new Intent(this, ProfileActivity.class);
-            // startActivity(intent);
+            Intent intent = new Intent(this, ProfileActivity.class);
+             startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
             // Perform logout action
@@ -157,20 +157,22 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        // Handle logout functionality here
-        // Clear any saved session data, if you’re using SharedPreferences for user session management
-        SharedPreferences preferences = getSharedPreferences("user_session", MODE_PRIVATE);
+        // Clear all session-related data in SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.clear(); // Remove all session data
+        editor.clear();  // Clears all saved session data
         editor.apply();
 
         // Show a message confirming logout
         Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
 
-        // Redirect to LoginActivity and clear activity stack to prevent the user from returning with the back button
+        // Redirect to LoginActivity and clear activity stack to prevent user from returning with the back button
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // Clear back stack
         startActivity(intent);
+
         finish(); // Finish current activity
     }
+
+
 }

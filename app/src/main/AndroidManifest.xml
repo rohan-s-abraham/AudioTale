@@ -13,6 +13,13 @@
         android:theme="@style/Theme.AUDIOTALE"
         tools:targetApi="31">
         <activity
+            android:name=".ProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AddBookActivity"
             android:exported="false">
             <meta-data
@@ -75,8 +82,10 @@
                 android:value="" />
         </activity>
         <activity android:name=".CategoryActivity" />
-
         <activity android:name=".AdminHomeActivity" />
+
+
+
 
         <meta-data
             android:name="preloaded_fonts"

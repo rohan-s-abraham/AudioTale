@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Avatar Section -->
+        <TextView
+            android:id="@+id/avatarTextView"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/circle_background"
+            android:fontFamily="@font/alkatra"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="A"
+            android:textColor="@android:color/white"
+            android:textSize="70sp" />
+
+        <!-- Name EditText -->
+        <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="  User Name" />
+
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@drawable/edit_text_blue_border"
+            android:layout_marginBottom="16dp"
+            android:drawableLeft="@drawable/ic_profile"
+            android:drawablePadding="10dp"
+            android:inputType="textPersonName"
+            android:padding="12dp"
+            android:textSize="20sp" />
+
+        <!-- Email TextView -->
+
+        <!-- Subscription Status -->
+
+        <TextView
+            android:id="@+id/subscriptionStatusTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="You are not subscribed"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <!-- Update Profile Button -->
+
+        <!-- Add Subscription Button -->
+
+        <Space
+            android:layout_width="362dp"
+            android:layout_height="36dp" />
+
+        <Button
+            android:id="@+id/updateProfileButton"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/audiotaleblue"
+            android:fontFamily="@font/alkatra"
+            android:textColor="@android:color/white"
+            android:text="Update Profile"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/addSubscriptionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="78dp"
+            android:backgroundTint="@color/audiotaleblue"
+            android:text="Add Subscription"
+            android:fontFamily="@font/alkatra"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

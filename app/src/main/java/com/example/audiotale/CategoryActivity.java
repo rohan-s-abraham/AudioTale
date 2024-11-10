@@ -104,10 +104,10 @@ public class CategoryActivity extends AppCompatActivity {
 
     private void logout() {
         // Handle logout functionality here
-        // Clear any saved session data, if you’re using SharedPreferences for user session management
-        SharedPreferences preferences = getSharedPreferences("user_session", MODE_PRIVATE);
+        // Clear only session-related data in SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.clear(); // Remove all session data
+        editor.putBoolean("isLoggedIn", false); // Set isLoggedIn to false
         editor.apply();
 
         // Show a message confirming logout
@@ -119,4 +119,5 @@ public class CategoryActivity extends AppCompatActivity {
         startActivity(intent);
         finish(); // Finish current activity
     }
+
 }

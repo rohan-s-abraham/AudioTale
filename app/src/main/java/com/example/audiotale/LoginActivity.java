@@ -1,6 +1,8 @@
 package com.example.audiotale;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -22,6 +24,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Check if the user is already logged in
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+        if (sharedPreferences.contains("userEmail")) {
+            // User session exists, redirect to HomeActivity
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+            return;
+        }
 
         // Change the color of the status bar
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -66,26 +77,33 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        if(email.equals("admin") && password.equals("admin")){
+        if (email.equals("admin") && password.equals("admin")) {
             // Redirect to AdminHomeActivity after successful login
             Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
             startActivity(intent);
             finish();
-        }
-
-
-            // Check if credentials are correct
-        else if (databaseHelper.authenticateUser(email, password)) {
+        } else if (databaseHelper.authenticateUser(email, password)) {
             Toast.makeText(this, "Welcome Onboard!", Toast.LENGTH_SHORT).show();
+
+            // Fetch full user details from the database
+            User user = databaseHelper.getUserDetails(email);  // Ensure this method returns a User object with full details
+
+            // Save session data with full user details
+            SharedPreferences sharedPreferences = getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("userEmail", user.getEmail());
+            editor.putString("userName", user.getName());
+            editor.putInt("subscriptionStatus", user.getSubscription());  // Assuming it's an int
+            editor.putBoolean("isLoggedIn", true);
+            editor.apply();
+
             // Redirect to HomeActivity after successful login
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
+        } else {
+            Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
         }
-
-        else {
-                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
-            }
-
     }
+
 }
