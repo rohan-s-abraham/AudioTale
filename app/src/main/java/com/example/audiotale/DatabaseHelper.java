@@ -309,20 +309,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return books;
     }
 
+    public Book getBookById(int bookId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_BOOKS,
+                null, // All columns
+                COLUMN_BOOK_ID + "=?", // WHERE clause to match bookId
+                new String[]{String.valueOf(bookId)}, // Arguments for WHERE clause
+                null, // GROUP BY
+                null, // HAVING
+                null); // ORDER BY
+
+        if (cursor != null && cursor.moveToFirst()) {
+            // Assuming Book has a constructor to initialize fields
+            Book book = new Book(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BOOK_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AUTHOR)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RELEASE_DATE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ABSTRACT)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTENT)),
+                    cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_COVER_PHOTO))
+            );
+            cursor.close();
+            return book;
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return null; // Return null if book not found
+    }
+
+
     // Method to update a book by ID
-    public int updateBook(int bookId, String name, String author, String releaseDate, String abstractText, String content, byte[] coverPhoto) {
+    public int updateBook(Book book) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_BOOK_NAME, name);
-        values.put(COLUMN_AUTHOR, author);
-        values.put(COLUMN_RELEASE_DATE, releaseDate);
-        values.put(COLUMN_ABSTRACT, abstractText);
-        values.put(COLUMN_CONTENT, content);
-        values.put(COLUMN_COVER_PHOTO, coverPhoto);
+        values.put(COLUMN_BOOK_NAME, book.getName());
+        values.put(COLUMN_AUTHOR, book.getAuthor());
+        values.put(COLUMN_RELEASE_DATE, book.getReleaseDate());
+        values.put(COLUMN_ABSTRACT, book.getBookAbstract());
+        values.put(COLUMN_CONTENT, book.getContent());
+        values.put(COLUMN_COVER_PHOTO, book.getCoverPhoto());
 
-        int result = db.update(TABLE_BOOKS, values, COLUMN_BOOK_ID + "=?", new String[]{String.valueOf(bookId)});
+        int rowsAffected = db.update(TABLE_BOOKS, values, COLUMN_BOOK_ID + "=?", new String[]{String.valueOf(book.getId())});
         db.close();
-        return result;
+        return rowsAffected; // Return the number of rows updated
     }
 
     // Method to delete a book by ID

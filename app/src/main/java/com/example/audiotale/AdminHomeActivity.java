@@ -49,7 +49,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
     private void displayBookList() {
         // Intent to navigate to Book Management Activity
-        Intent intent = new Intent(AdminHomeActivity.this, BookManagementActivity.class);
+        Intent intent = new Intent(AdminHomeActivity.this, ManageBooksActivity.class);
         startActivity(intent);
     }
 
