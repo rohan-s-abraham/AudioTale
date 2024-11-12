@@ -55,7 +55,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
     private void openAddBook() {
         // Intent to navigate to Add Book Activity
-        Intent intent = new Intent(AdminHomeActivity.this, AddBookActivity.class);
+        Intent intent = new Intent(AdminHomeActivity.this, AddBooksActivity.class);
         startActivity(intent);
     }
 

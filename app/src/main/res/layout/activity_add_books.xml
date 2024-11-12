@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddBooksActivity">
+
+    <!-- activity_add_book.xml -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Cover Photo -->
+
+            <!-- Name -->
+            <Space
+                android:layout_width="378dp"
+                android:layout_height="35dp" />
+
+            <ImageView
+                android:id="@+id/ivCoverPhoto"
+                android:layout_width="180dp"
+                android:layout_height="161dp"
+                android:layout_gravity="center"
+                android:contentDescription="Cover Photo"
+                android:onClick="selectCoverPhoto"
+                android:src="@drawable/ic_cover_placeholder" />
+
+            <Space
+                android:layout_width="376dp"
+                android:layout_height="50dp" />
+
+            <EditText
+                android:id="@+id/etBookName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Book Name" />
+
+            <!-- Author Name -->
+            <EditText
+                android:id="@+id/etAuthorName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Author Name" />
+
+            <!-- Release Date -->
+            <EditText
+                android:id="@+id/etReleaseDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Release Date" />
+
+            <!-- Abstract -->
+            <EditText
+                android:id="@+id/etAbstract"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Abstract"
+                android:minLines="3"
+                android:maxLines="5" />
+
+            <!-- Full Story -->
+            <EditText
+                android:id="@+id/etStory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Story"
+                android:minLines="5"
+                android:maxLines="10" />
+
+            <!-- Add Book Button -->
+            <Button
+                android:id="@+id/btnAddBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Add Book" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
