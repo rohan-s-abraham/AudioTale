@@ -112,6 +112,13 @@
             android:dividerHeight="1dp"
             android:background="@android:color/white" />
 
+<!--        <android.support.v7.widget.RecyclerView-->
+<!--            android:id="@+id/top10BooksRecyclerView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:orientation="horizontal"/>-->
+
         <!-- Popular Books Section -->
         <TextView
             android:layout_width="match_parent"
@@ -130,6 +137,13 @@
             android:divider="@android:color/darker_gray"
             android:dividerHeight="1dp"
             android:background="@android:color/white"/>
+
+<!--        <android.support.v7.widget.RecyclerView-->
+<!--            android:id="@+id/popularBooksRecyclerView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:orientation="horizontal"/>-->
     </LinearLayout>
 
 

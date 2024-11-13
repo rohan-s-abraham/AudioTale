@@ -20,6 +20,8 @@ public class Book {
         this.coverPhoto = coverPhoto;
     }
 
+
+
     // Getters and Setters for each field
 
     public int getId() {

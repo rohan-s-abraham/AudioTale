@@ -37,6 +37,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         holder.textViewName.setText(book.getName());
         holder.imageViewCover.setImageBitmap(Utils.getImage(book.getCoverPhoto()));
 
+        // Set click listener
         holder.itemView.setOnClickListener(v -> listener.onBookClick(book));
     }
 
