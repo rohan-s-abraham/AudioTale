@@ -36,6 +36,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         Book book = books.get(position);
         holder.textViewName.setText(book.getName());
         holder.imageViewCover.setImageBitmap(Utils.getImage(book.getCoverPhoto()));
+        holder.bookabstract.setText(book.getBookAbstract());
 
         // Set click listener
         holder.itemView.setOnClickListener(v -> listener.onBookClick(book));
@@ -49,11 +50,13 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
     public static class BookViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName;
         ImageView imageViewCover;
+        TextView bookabstract;
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.textViewBookName);
             imageViewCover = itemView.findViewById(R.id.imageViewBookCover);
+            bookabstract = itemView.findViewById(R.id.bookabstract);
         }
     }
 }
