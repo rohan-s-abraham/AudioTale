@@ -2,30 +2,25 @@ package com.example.audiotale;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.Toast;
 
 
 //import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -142,9 +137,10 @@ public class HomeActivity extends AppCompatActivity {
         if (books != null) {
             booksAdapter = new BooksAdapter(books, book -> {
                 // On book click, open BookDetailsActivity
-                Intent intent = new Intent(HomeActivity.this, BookDetailsActivity.class);
+                Intent intent = new Intent(HomeActivity.this, UserBookview.class);
                 intent.putExtra("BOOK_ID", book.getId());
                 startActivity(intent);
+
             });
             recyclerView.setAdapter(booksAdapter);
         } else {
