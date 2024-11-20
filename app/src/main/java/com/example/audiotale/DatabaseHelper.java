@@ -16,7 +16,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase.db";
-    private static final int DATABASE_VERSION = 3; // nerthe 2 arunn
+    private static final int DATABASE_VERSION = 4; // nerthe 3 arunn, athinu munne 2
 
     // Table and columns for Users
     private static final String TABLE_USERS = "users";
@@ -61,6 +61,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_CONTENT + " TEXT, "
                 + COLUMN_COVER_PHOTO + " BLOB" + ")";
         db.execSQL(CREATE_BOOKS_TABLE);
+
+        // New SubRequests table
+        String CREATE_SUBREQUESTS_TABLE = "CREATE TABLE SubRequests ("
+                + "id INTEGER PRIMARY KEY, "
+                + "reqType INTEGER DEFAULT 0)";
+        db.execSQL(CREATE_SUBREQUESTS_TABLE);
     }
 
     @Override
@@ -79,6 +85,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + COLUMN_CONTENT + " TEXT, "
                     + COLUMN_COVER_PHOTO + " BLOB" + ")";
             db.execSQL(CREATE_BOOKS_TABLE);
+        }
+
+        if (oldVersion < 4) {
+            String CREATE_SUBREQUESTS_TABLE = "CREATE TABLE SubRequests ("
+                    + "id INTEGER PRIMARY KEY, "
+                    + "reqType INTEGER DEFAULT 0)";
+            db.execSQL(CREATE_SUBREQUESTS_TABLE);
         }
     }
 
@@ -365,5 +378,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    // Insert or update a subscription request
+    public void addOrUpdateSubscriptionRequest(int userId, int reqType) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("id", userId);
+        values.put("reqType", reqType);
+
+        long result = db.replace("SubRequests", null, values); // Insert or update
+        db.close();
+    }
+
+    // Get subscription request type for a user
+    public int getSubscriptionRequestType(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT reqType FROM SubRequests WHERE id=?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        int reqType = 0;
+        if (cursor.moveToFirst()) {
+            reqType = cursor.getInt(cursor.getColumnIndexOrThrow("reqType"));
+        }
+        cursor.close();
+        db.close();
+        return reqType;
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.audiotale;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -70,8 +71,8 @@ public class ProfileActivity extends AppCompatActivity {
         addSubscriptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent intent = new Intent(ProfileActivity.this, SubscriptionActivity.class);
-                // startActivity(intent);
+                 Intent intent = new Intent(ProfileActivity.this, SubscriptionActivity.class);
+                 startActivity(intent);
             }
         });
     }

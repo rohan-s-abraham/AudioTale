@@ -99,6 +99,8 @@ public class UserBookview extends AppCompatActivity {
                     subscribeButton.setVisibility(View.VISIBLE);
                     subscribeButton.setOnClickListener(v -> {
                         // Handle subscription logic
+                        Intent intent = new Intent(this, SubscriptionActivity.class);
+                        startActivity(intent);
                         Toast.makeText(this, "Subscription process...", Toast.LENGTH_SHORT).show();
                     });
                 }

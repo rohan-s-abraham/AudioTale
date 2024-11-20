@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText confirmpasswordEditText;
     private EditText emailEditText;
     private Button registerButton;
+    private ImageView button_back;
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -37,6 +39,15 @@ public class SignUpActivity extends AppCompatActivity {
         confirmpasswordEditText = findViewById(R.id.confirmPasswordEditText);
         emailEditText = findViewById(R.id.emailEditText);
         registerButton = findViewById(R.id.signUpButton);
+        button_back=findViewById(R.id.back_button);
+
+        //Back button
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Initialize the database helper
         databaseHelper = new DatabaseHelper(this);
