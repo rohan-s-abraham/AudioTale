@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 //import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -129,6 +131,32 @@ public class HomeActivity extends AppCompatActivity {
 
 
         loadBooks();
+
+        // BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Set Home as the selected item by default
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
+        // Handle navigation item clicks
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_home:
+                    // Stay on HomeActivity
+                    return true;
+                case R.id.nav_suggest:
+                    // Navigate to SuggestBookActivity
+//                    startActivity(new Intent(HomeActivity.this, SuggestBookActivity.class));
+                    return true;
+                case R.id.nav_profile:
+                    // Navigate to Profile Activity
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    startActivity(intent);
+                    return true;
+                default:
+                    return false;
+            }
+        });
     }
 
     private void loadBooks() {
@@ -167,12 +195,13 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle menu item clicks
         int id = item.getItemId();
-        if (id == R.id.action_profile) {
-            // Navigate to Profile Activity
-            Intent intent = new Intent(this, ProfileActivity.class);
-             startActivity(intent);
-            return true;
-        } else if (id == R.id.action_logout) {
+//        if (id == R.id.action_profile) {
+//            // Navigate to Profile Activity
+//            Intent intent = new Intent(this, ProfileActivity.class);
+//             startActivity(intent);
+//            return true;
+//        } else
+        if (id == R.id.action_logout) {
             // Perform logout action
             logout();
             return true;

@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class ProfileActivity extends AppCompatActivity {
     private EditText nameEditText;
     private TextView emailTextView, avatarTextView, subscriptionStatusTextView;
@@ -75,6 +77,32 @@ public class ProfileActivity extends AppCompatActivity {
                  startActivity(intent);
             }
         });
+
+
+        // BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Set Home as the selected item by default
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
+        // Handle navigation item clicks
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_home:
+                    finish();
+                    return true;
+                case R.id.nav_suggest:
+                    // Navigate to SuggestBookActivity
+//                    startActivity(new Intent(HomeActivity.this, SuggestBookActivity.class));
+                    return true;
+                case R.id.nav_profile:
+                    // No need to move
+                    return true;
+                default:
+                    return false;
+            }
+        });
+
     }
 
     private void loadUserProfile() {
