@@ -82,26 +82,34 @@ public class ProfileActivity extends AppCompatActivity {
         // BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Set Home as the selected item by default
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
-
-        // Handle navigation item clicks
+        // Force Profile to always stay selected
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.nav_home:
-                    finish();
-                    return true;
-                case R.id.nav_suggest:
-                    // Navigate to SuggestBookActivity
-//                    startActivity(new Intent(HomeActivity.this, SuggestBookActivity.class));
-                    return true;
-                case R.id.nav_profile:
-                    // No need to move
-                    return true;
-                default:
-                    return false;
+            if (item.getItemId() != R.id.nav_profile) {
+                // Perform actions for Home or Suggest Book
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        // Handle Home action
+                        // Example: Navigate to home activity
+                        finish();
+                        break;
+
+                    case R.id.nav_suggest:
+                        // Handle Suggest Book action
+                        // Example: Navigate to suggest book activity
+                        // startActivity(new Intent(this, SuggestBookActivity.class));
+                        break;
+                }
+
+                // Return false to prevent the selection of other items
+                return false;
             }
+
+            // Always allow the Profile icon to remain selected
+            return true;
         });
+
+        // Ensure Profile is selected by default
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
 
     }
 

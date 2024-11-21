@@ -2,6 +2,8 @@ package com.example.audiotale;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,14 +48,6 @@ public class HomeActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-        // Set up the custom Action Bar
-//        View actionBarLayout = LayoutInflater.from(this).inflate(R.layout.action_bar_layout, null);
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setDisplayShowCustomEnabled(true);
-//            actionBar.setCustomView(actionBarLayout);
-//            actionBar.setDisplayShowTitleEnabled(false);  // Hide default title
-//        }
 
         // Set up custom action bar
         ActionBar actionBar = getSupportActionBar();
@@ -67,52 +61,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Initialize Views
         searchBar = findViewById(R.id.searchBar);
-//        top10BooksListView = findViewById(R.id.top10BooksListView);
-//        popularBooksListView = findViewById(R.id.popularBooksListView);
-//        btnFiction = findViewById(R.id.btnFiction);
-//        btnNonFiction = findViewById(R.id.btnNonFiction);
-//        btnRomance = findViewById(R.id.btnRomance);
-//        btnScience = findViewById(R.id.btnScience);
 
-        // Sample Data
-//        top10Books = new ArrayList<>();
-//        popularBooks = new ArrayList<>();
-
-//        top10Books.add("The Alchemist");
-//        top10Books.add("To Kill a Mockingbird");
-//        top10Books.add("1984");
-//        top10Books.add("Pride and Prejudice");
-//        top10Books.add("The Great Gatsby");
-//        top10Books.add("Moby Dick");
-//        top10Books.add("War and Peace");
-//        top10Books.add("Hamlet");
-//        top10Books.add("The Odyssey");
-//        top10Books.add("Ulysses");
-
-//        popularBooks.add("Harry Potter");
-//        popularBooks.add("The Lord of the Rings");
-//        popularBooks.add("Percy Jackson");
-//        popularBooks.add("The Hunger Games");
-//        popularBooks.add("Twilight");
-//        popularBooks.add("Divergent");
-//        popularBooks.add("Sherlock Holmes");
-
-        // Set Adapters
-//        top10BooksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, top10Books);
-//        popularBooksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, popularBooks);
-
-//        top10BooksListView.setAdapter(top10BooksAdapter);
-//        popularBooksListView.setAdapter(popularBooksAdapter);
-
-        // Enable Text Filtering for Smooth Search
-//        top10BooksListView.setTextFilterEnabled(true);
-//        popularBooksListView.setTextFilterEnabled(true);
-
-        // Button Click Listeners for Categories
-//        btnFiction.setOnClickListener(view -> openCategoryActivity("Fiction"));
-//        btnNonFiction.setOnClickListener(view -> openCategoryActivity("Non-Fiction"));
-//        btnRomance.setOnClickListener(view -> openCategoryActivity("Romance"));
-//        btnScience.setOnClickListener(view -> openCategoryActivity("Science"));
 
         // Search Bar Functionality
         searchBar.addTextChangedListener(new TextWatcher() {
@@ -135,29 +84,39 @@ public class HomeActivity extends AppCompatActivity {
         // BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Set Home as the selected item by default
+        // Force Home to always stay selected
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() != R.id.nav_home) {
+                // Perform actions for Suggest or Profile
+                switch (item.getItemId()) {
+                    case R.id.nav_suggest:
+                        // Handle Suggest Book action
+                        // Example: Navigate to suggest book activity
+                        // startActivity(new Intent(this, SuggestBookActivity.class));
+                        break;
+
+                    case R.id.nav_profile:
+                        // Handle Profile action
+                        Intent intent = new Intent(this, ProfileActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+
+                // Return false to prevent the selection of other items
+                return false;
+            }
+
+            // Always allow the Home icon to remain selected
+            return true;
+        });
+
+        // Ensure Home is selected by default
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
 
-        // Handle navigation item clicks
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.nav_home:
-                    // Stay on HomeActivity
-                    return true;
-                case R.id.nav_suggest:
-                    // Navigate to SuggestBookActivity
-//                    startActivity(new Intent(HomeActivity.this, SuggestBookActivity.class));
-                    return true;
-                case R.id.nav_profile:
-                    // Navigate to Profile Activity
-                    Intent intent = new Intent(this, ProfileActivity.class);
-                    startActivity(intent);
-                    return true;
-                default:
-                    return false;
-            }
-        });
+
     }
+
+
 
     private void loadBooks() {
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="icon_size_enlarged">40dp</dimen> <!-- Enlarged icon size -->
+    <dimen name="icon_size_default">24dp</dimen> <!-- Default icon size -->
+</resources>
