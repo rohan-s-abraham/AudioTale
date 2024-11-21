@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private BooksAdapter booksAdapter;
     private DatabaseHelper dbHelper;
+    private int currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +93,7 @@ public class HomeActivity extends AppCompatActivity {
                 // Perform actions for Suggest or Profile
                 switch (item.getItemId()) {
                     case R.id.nav_suggest:
-                        // Handle Suggest Book action
-                        // Example: Navigate to suggest book activity
-                        // startActivity(new Intent(this, SuggestBookActivity.class));
+                        showSuggestBookDialog();
                         break;
 
                     case R.id.nav_profile:
@@ -116,6 +117,54 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private void showSuggestBookDialog() {
+        // Create a custom dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Suggest a Book");
+
+        // Inflate a custom layout
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_suggest_book, null);
+        builder.setView(dialogView);
+
+        // Get input fields
+        EditText bookNameInput = dialogView.findViewById(R.id.book_name_input);
+        EditText authorNameInput = dialogView.findViewById(R.id.author_name_input);
+        EditText releaseYearInput = dialogView.findViewById(R.id.release_year_input);
+
+        // Set dialog buttons
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.setPositiveButton("Request Admin!", (dialog, which) -> {
+            String bookName = bookNameInput.getText().toString();
+            String authorName = authorNameInput.getText().toString();
+            String releaseYear = releaseYearInput.getText().toString();
+
+            // Validate inputs
+            if (bookName.isEmpty() || authorName.isEmpty() || releaseYear.isEmpty()) {
+                Toast.makeText(this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Add the book request to the database
+            addBookRequestToDatabase(bookName, authorName, Integer.parseInt(releaseYear));
+        });
+
+        // Show dialog
+        builder.create().show();
+    }
+
+    private void addBookRequestToDatabase(String bookName, String authorName, int releaseYear) {
+        SharedPreferences preferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        currentUserId = preferences.getInt("userId", 0);
+
+        long result = dbHelper.addBookRequest(currentUserId, bookName, authorName, releaseYear);
+
+        if(result != 0){
+            Toast.makeText(this, "Request send successfully!", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "Request failed!", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     private void loadBooks() {
@@ -137,11 +186,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
     // Opens a new activity showing books under the selected category
-    private void openCategoryActivity(String category) {
-        Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
-        intent.putExtra("CATEGORY_NAME", category);
-        startActivity(intent);
-    }
+//    private void openCategoryActivity(String category) {
+//        Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
+//        intent.putExtra("CATEGORY_NAME", category);
+//        startActivity(intent);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

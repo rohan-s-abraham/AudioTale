@@ -17,7 +17,7 @@ public class SubscriptionActivity extends AppCompatActivity {
 
 
     private DatabaseHelper databaseHelper;
-    private int currentUserId; // Replace with the actual logged-in user ID
+    private int currentUserId;
 
 
     @Override

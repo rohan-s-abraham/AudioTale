@@ -129,10 +129,17 @@ public class ProfileActivity extends AppCompatActivity {
                 isSubscribed = user.getSubscription() > 0;
 
                 if (isSubscribed) {
-                    addSubscriptionButton.setVisibility(View.GONE);
-                    subscriptionStatusTextView.setText("You Have Already Subscribed!");
-                    subscriptionStatusTextView.setTextColor(Color.GREEN);
-                    subscriptionStatusTextView.setVisibility(View.VISIBLE);
+                    if(user.getSubscription()==1){ //1 for monthly subscription
+                        addSubscriptionButton.setVisibility(View.GONE);
+                        subscriptionStatusTextView.setText("You Have Subscribed to Montly Plan!");
+                        subscriptionStatusTextView.setTextColor(Color.rgb(50, 205, 50));
+                        subscriptionStatusTextView.setVisibility(View.VISIBLE);
+                    }else {
+                        addSubscriptionButton.setVisibility(View.GONE);
+                        subscriptionStatusTextView.setText("You Have Subscribed to Yearly Plan!");
+                        subscriptionStatusTextView.setTextColor(Color.rgb(50, 205, 50));
+                        subscriptionStatusTextView.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     addSubscriptionButton.setVisibility(View.VISIBLE);
                     subscriptionStatusTextView.setVisibility(View.GONE);

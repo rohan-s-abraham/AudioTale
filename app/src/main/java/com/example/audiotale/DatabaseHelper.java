@@ -16,7 +16,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase.db";
-    private static final int DATABASE_VERSION = 4; // nerthe 3 arunn, athinu munne 2
+    private static final int DATABASE_VERSION = 5; // nerthe 4 arunn, athinu munne 3, athinu munne 2
 
     // Table and columns for Users
     private static final String TABLE_USERS = "users";
@@ -35,6 +35,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ABSTRACT = "abstract";
     private static final String COLUMN_CONTENT = "content";
     private static final String COLUMN_COVER_PHOTO = "cover_photo";
+
+    // Table and columns for BookRequests
+    private static final String TABLE_BOOK_REQUESTS = "book_requests";
+    private static final String COLUMN_REQUEST_ID = "request_id";
+    private static final String COLUMN_USER_ID = "user_id";
+    private static final String COLUMN_BOOK_NAME_REQUEST = "book_name";
+    private static final String COLUMN_AUTHOR_NAME = "author_name";
+    private static final String COLUMN_RELEASE_YEAR = "release_year";
+    private static final String COLUMN_REQUEST_DATE = "request_date"; // Timestamp for current date
+
 
 
     public DatabaseHelper(Context context) {
@@ -67,6 +77,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "id INTEGER PRIMARY KEY, "
                 + "reqType INTEGER DEFAULT 0)";
         db.execSQL(CREATE_SUBREQUESTS_TABLE);
+
+        // Create BookRequests table
+        String CREATE_BOOK_REQUESTS_TABLE = "CREATE TABLE " + TABLE_BOOK_REQUESTS + "("
+                + COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_USER_ID + " INTEGER, "
+                + COLUMN_BOOK_NAME_REQUEST + " TEXT, "
+                + COLUMN_AUTHOR_NAME + " TEXT, "
+                + COLUMN_RELEASE_YEAR + " INTEGER, "
+                + COLUMN_REQUEST_DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+                + "FOREIGN KEY(" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + ")"
+                + ")";
+        db.execSQL(CREATE_BOOK_REQUESTS_TABLE);
     }
 
     @Override
@@ -92,6 +114,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + "id INTEGER PRIMARY KEY, "
                     + "reqType INTEGER DEFAULT 0)";
             db.execSQL(CREATE_SUBREQUESTS_TABLE);
+        }
+
+        // Upgrade to version 5 (Add BookRequests table)
+        if (oldVersion < 5) {
+            String CREATE_BOOK_REQUESTS_TABLE = "CREATE TABLE " + TABLE_BOOK_REQUESTS + "("
+                    + COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + COLUMN_USER_ID + " INTEGER, "
+                    + COLUMN_BOOK_NAME_REQUEST + " TEXT, "
+                    + COLUMN_AUTHOR_NAME + " TEXT, "
+                    + COLUMN_RELEASE_YEAR + " INTEGER, "
+                    + COLUMN_REQUEST_DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP "+ ")";
+            db.execSQL(CREATE_BOOK_REQUESTS_TABLE);
         }
     }
 
@@ -462,5 +496,84 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int rowsDeleted = db.delete("SubRequests", "id = ?", new String[]{String.valueOf(requestId)});
         return rowsDeleted > 0;
     }
+
+
+    // Method to add a book request
+    public long addBookRequest(int userId, String bookName, String authorName, int releaseYear) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_ID, userId);
+        values.put(COLUMN_BOOK_NAME_REQUEST, bookName);
+        values.put(COLUMN_AUTHOR_NAME, authorName);
+        values.put(COLUMN_RELEASE_YEAR, releaseYear);
+
+        long result = db.insert(TABLE_BOOK_REQUESTS, null, values);
+        db.close();
+        return result;
+    }
+
+    // Method to get all book requests for a user
+    public List<BookRequest> getBookRequestsForUser(int userId) {
+        List<BookRequest> requests = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_BOOK_REQUESTS,
+                new String[]{COLUMN_REQUEST_ID, COLUMN_BOOK_NAME_REQUEST, COLUMN_AUTHOR_NAME, COLUMN_RELEASE_YEAR, COLUMN_REQUEST_DATE},
+                COLUMN_USER_ID + "=?",
+                new String[]{String.valueOf(userId)}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                BookRequest request = new BookRequest(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_REQUEST_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_NAME_REQUEST)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AUTHOR_NAME)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_RELEASE_YEAR)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REQUEST_DATE)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+                );
+                requests.add(request);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return requests;
+    }
+
+    public List<BookRequest> getAllBookRequests() {
+        List<BookRequest> requests = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Modify query to select user_id as well
+        Cursor cursor = db.query("book_requests", null, null, null, null, null, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                // Fetch the user_id from the cursor
+                int userId = cursor.getInt(cursor.getColumnIndexOrThrow("user_id"));  // Assuming 'user_id' column exists in the table
+
+                // Create BookRequest with userId
+                BookRequest request = new BookRequest(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_REQUEST_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_NAME_REQUEST)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AUTHOR_NAME)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_RELEASE_YEAR)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REQUEST_DATE)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+                );
+
+                requests.add(request);
+            }
+            cursor.close();
+        }
+        return requests;
+    }
+
+
+    public boolean deleteBookRequestById(int requestId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete("book_requests", "request_id = ?", new String[]{String.valueOf(requestId)});
+        db.close();
+        return rowsDeleted > 0;
+    }
+
 
 }
