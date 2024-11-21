@@ -29,7 +29,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="26dp" />
+            android:layout_height="12dp" />
 
         <Button
             android:id="@+id/bookmng"
@@ -44,7 +44,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="26dp" />
+            android:layout_height="12dp" />
 
         <Button
             android:id="@+id/addbook"
@@ -56,6 +56,36 @@
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <Button
+            android:id="@+id/subreq"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:backgroundTint="@color/audiotaleblue"
+            android:fontFamily="@font/alkatra"
+            android:text="Subscription Requests"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <Button
+            android:id="@+id/bookreq"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:backgroundTint="@color/audiotaleblue"
+            android:fontFamily="@font/alkatra"
+            android:text="Book Requests"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

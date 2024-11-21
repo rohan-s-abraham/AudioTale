@@ -168,6 +168,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return users;
     }
 
+    // Fetch username by ID
+    public String getUsernameById(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("users", new String[]{"username"}, "id=?", new String[]{String.valueOf(userId)}, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {  // Ensure the cursor moves to the first row
+                String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+                cursor.close();
+                return username;
+            } else {
+                cursor.close();
+                Log.d("Debug", "No user found for ID: " + userId);
+            }
+        } else {
+            Log.d("Debug", "Cursor is null for user ID: " + userId);
+        }
+        return null;  // Return null if no username is found
+    }
+
     public boolean deleteUserById(int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         int rowsAffected = db.delete("users", "id = ?", new String[]{String.valueOf(userId)});
@@ -183,6 +203,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int result = db.update(TABLE_USERS, values, COLUMN_USERNAME + "=?", new String[]{username});
         db.close();
         return result;
+    }
+
+    // Update subscription by user ID
+    public boolean updateSubscriptionById(int userId, int subscriptionType) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("sub", subscriptionType);
+
+        int rowsAffected = db.update("users", values, "id=?", new String[]{String.valueOf(userId)});
+        return rowsAffected > 0;
     }
 
     // Method to update the username
@@ -208,24 +238,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public User getUserDetails(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        // Query with the correct column names
-        Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_USERNAME, COLUMN_EMAIL, COLUMN_SUBSCRIPTION},
-                COLUMN_EMAIL + "=?", new String[]{email}, null, null, null);
+        Cursor cursor = db.query(TABLE_USERS,
+                new String[]{COLUMN_ID, COLUMN_USERNAME, COLUMN_EMAIL, COLUMN_SUBSCRIPTION},
+                COLUMN_EMAIL + "=?",
+                new String[]{email},
+                null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
-            // Retrieve column indexes based on the corrected column names
+            int idIndex = cursor.getColumnIndex(COLUMN_ID);
             int usernameIndex = cursor.getColumnIndex(COLUMN_USERNAME);
             int emailIndex = cursor.getColumnIndex(COLUMN_EMAIL);
             int subscriptionIndex = cursor.getColumnIndex(COLUMN_SUBSCRIPTION);
 
-            if (usernameIndex != -1 && emailIndex != -1 && subscriptionIndex != -1) {
+            if (idIndex != -1 && usernameIndex != -1 && emailIndex != -1 && subscriptionIndex != -1) {
+                int userId = cursor.getInt(idIndex);
                 String username = cursor.getString(usernameIndex);
                 String userEmail = cursor.getString(emailIndex);
                 int subscriptionStatus = cursor.getInt(subscriptionIndex);
 
                 cursor.close();
-                // Assuming your User class has a constructor that matches this
-                return new User(0,username, userEmail, subscriptionStatus);
+                return new User(userId, username, userEmail, subscriptionStatus);
             } else {
                 Log.e("DatabaseHelper", "One or more columns not found in users table.");
             }
@@ -236,6 +268,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return null;  // Return null if user not found or columns are missing
     }
+
 
 
 
@@ -389,6 +422,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Method to fetch all SubRequests
+    public List<SubReq> getAllSubRequests() {
+        List<SubReq> requests = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("SubRequests", new String[]{"id", "reqType"}, null, null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                SubReq request = new SubReq(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("reqType"))
+                );
+                requests.add(request);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return requests;
+    }
+
     // Get subscription request type for a user
     public int getSubscriptionRequestType(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -402,6 +454,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return reqType;
+    }
+
+    // Delete subscription request
+    public boolean deleteSubRequestById(int requestId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete("SubRequests", "id = ?", new String[]{String.valueOf(requestId)});
+        return rowsDeleted > 0;
     }
 
 }

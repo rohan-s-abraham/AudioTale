@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class AdminHomeActivity extends AppCompatActivity {
 
-    private Button usermng, bookmng, addbook;
+    private Button usermng, bookmng, addbook, subreq, bookreq;
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -30,6 +30,9 @@ public class AdminHomeActivity extends AppCompatActivity {
         usermng = findViewById(R.id.usermng);
         bookmng = findViewById(R.id.bookmng);
         addbook = findViewById(R.id.addbook);
+        subreq = findViewById(R.id.subreq);
+        bookreq = findViewById(R.id.bookreq);
+
 
         // Initialize the database helper (Optional: only if needed here)
         databaseHelper = new DatabaseHelper(this);
@@ -38,6 +41,8 @@ public class AdminHomeActivity extends AppCompatActivity {
         usermng.setOnClickListener(v -> displayUserList());
         bookmng.setOnClickListener(v -> displayBookList());
         addbook.setOnClickListener(v -> openAddBook());
+        subreq.setOnClickListener(v -> displaySubReq());
+        bookreq.setOnClickListener(v -> displayBookReq());
     }
 
     private void displayUserList() {
@@ -53,6 +58,18 @@ public class AdminHomeActivity extends AppCompatActivity {
     }
 
     private void openAddBook() {
+        // Intent to navigate to Add Book Activity
+        Intent intent = new Intent(AdminHomeActivity.this, AddBooksActivity.class);
+        startActivity(intent);
+    }
+
+    private void displaySubReq() {
+        // Intent to navigate to Add Book Activity
+        Intent intent = new Intent(AdminHomeActivity.this, SubscriptionRequests.class);
+        startActivity(intent);
+    }
+
+    private void displayBookReq() {
         // Intent to navigate to Add Book Activity
         Intent intent = new Intent(AdminHomeActivity.this, AddBooksActivity.class);
         startActivity(intent);

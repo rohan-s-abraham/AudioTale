@@ -44,7 +44,17 @@ public class UserManagementActivity extends AppCompatActivity {
             userMap.put("email", user.getEmail());
 
             // Convert subscription to "Yes" or "No"
-            String subscriptionStatus = user.getSubscription() == 1 ? "Yes" : "No";
+            String subscriptionStatus;
+            if (user.getSubscription() > 0) {
+                if(user.getSubscription() == 1){
+                    subscriptionStatus = "Yes (Monthly)";
+                }else{
+                    subscriptionStatus = "Yes (Yearly)";
+                }
+
+            } else {
+                subscriptionStatus = "No";
+            }
             userMap.put("subscription", "Subscribed: " + subscriptionStatus);
 
             userList.add(userMap);

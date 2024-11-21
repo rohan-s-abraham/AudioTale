@@ -7,7 +7,6 @@
     tools:context=".SubscriptionActivity">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -31,25 +30,48 @@
             android:id="@+id/tv_subscription_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose Your Subscription"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_gravity="center"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:text="Choose Your Subscription"
+            android:fontFamily="@font/alkatra"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_monthly"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Subscribe Monthly"
-            android:layout_marginTop="16dp"/>
+<!--        <Button-->
+<!--            android:id="@+id/btn_monthly"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Subscribe Monthly"-->
+<!--            android:layout_marginTop="16dp"/>-->
 
-        <Button
-            android:id="@+id/btn_yearly"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Subscribe Yearly"
-            android:layout_marginTop="16dp"/>
+<!--        <Button-->
+<!--            android:id="@+id/btn_yearly"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Subscribe Yearly"-->
+<!--            android:layout_marginTop="16dp"/>-->
+
+        <ImageView
+            android:id="@+id/monthly_view"
+            android:layout_width="wrap_content"
+            android:layout_height="279dp"
+            android:clickable="true"
+            android:contentDescription="subsciption_card"
+            android:focusable="true"
+            android:src="@drawable/monthly_sub2" />
+
+        <Space
+            android:layout_width="373dp"
+            android:layout_height="15dp" />
+
+        <ImageView
+            android:id="@+id/yearly_view"
+            android:layout_width="wrap_content"
+            android:layout_height="279dp"
+            android:clickable="true"
+            android:contentDescription="subsciption_card"
+            android:focusable="true"
+            android:src="@drawable/yearly_sub2" />
 
     </LinearLayout>
 

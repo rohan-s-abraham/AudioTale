@@ -90,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
                 avatarTextView.setText(user.getName().substring(0, 1).toUpperCase());  // Set the avatar based on the name
 
                 // Check the user's subscription status
-                isSubscribed = user.getSubscription() == 1;
+                isSubscribed = user.getSubscription() > 0;
 
                 if (isSubscribed) {
                     addSubscriptionButton.setVisibility(View.GONE);

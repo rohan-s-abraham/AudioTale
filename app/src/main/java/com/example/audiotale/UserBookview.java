@@ -88,7 +88,7 @@ public class UserBookview extends AppCompatActivity {
                 Log.d("ProfileActivity", "User Retrieved: " + user.getName() + ", " + user.getEmail());
 
                 // Check the user's subscription status
-                isSubscribed = user.getSubscription() == 1;
+                isSubscribed = user.getSubscription() > 0;
 
                 if (isSubscribed) {
                     // Show story if subscribed
@@ -101,7 +101,7 @@ public class UserBookview extends AppCompatActivity {
                         // Handle subscription logic
                         Intent intent = new Intent(this, SubscriptionActivity.class);
                         startActivity(intent);
-                        Toast.makeText(this, "Subscription process...", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "Subscription process...", Toast.LENGTH_SHORT).show();
                     });
                 }
             } else {

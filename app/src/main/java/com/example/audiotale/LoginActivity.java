@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -97,6 +98,9 @@ public class LoginActivity extends AppCompatActivity {
             editor.putInt("subscriptionStatus", user.getSubscription());  // Assuming it's an int
             editor.putBoolean("isLoggedIn", true);
             editor.apply();
+
+            Log.d("LoginActivity", "Saved User ID: " + user.getId());
+
 
             // Redirect to HomeActivity after successful login
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
