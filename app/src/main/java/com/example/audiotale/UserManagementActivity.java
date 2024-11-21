@@ -1,13 +1,14 @@
 package com.example.audiotale;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,9 +77,19 @@ public class UserManagementActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageView deleteIcon = view.findViewById(R.id.deleteUserIcon);
-                deleteIcon.setOnClickListener(v -> deleteUser(users.get(position).getId(), position));
+                deleteIcon.setOnClickListener(v -> showDeleteConfirmationDialog(users.get(position).getId(), position));
             }
         });
+    }
+
+    private void showDeleteConfirmationDialog(int userId, int position) {
+        // Create a confirmation dialog
+        new AlertDialog.Builder(this)
+                .setTitle("Delete User")
+                .setMessage("Are you sure you want to delete this user?")
+                .setPositiveButton("Yes", (dialog, which) -> deleteUser(userId, position)) // If "Yes" is clicked, delete the user
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss()) // If "No" is clicked, dismiss the dialog
+                .show();
     }
 
     private void deleteUser(int userId, int position) {
