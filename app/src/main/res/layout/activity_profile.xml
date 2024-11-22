@@ -83,24 +83,26 @@
         <Button
             android:id="@+id/updateProfileButton"
             android:layout_width="match_parent"
-            android:layout_height="78dp"
+            android:layout_height="68dp"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_button"
             android:backgroundTint="@color/audiotaleblue"
             android:fontFamily="@font/alkatra"
-            android:textColor="@android:color/white"
             android:text="Update Profile"
+            android:textColor="@android:color/white"
             android:textSize="16sp" />
 
         <Button
             android:id="@+id/addSubscriptionButton"
             android:layout_width="match_parent"
-            android:layout_height="78dp"
+            android:layout_height="68dp"
             android:layout_marginBottom="78dp"
             android:backgroundTint="@color/audiotaleblue"
             android:text="Add Subscription"
             android:fontFamily="@font/alkatra"
             android:textColor="@android:color/white"
             android:textSize="16sp"
+            android:background="@drawable/rounded_button"
             android:visibility="gone" />
 
     </LinearLayout>

@@ -23,14 +23,25 @@
         <EditText
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginBottom="8dp"
-            android:background="@android:color/white"
-            android:drawableLeft="@android:drawable/ic_search_category_default"
-            android:hint="Search for books..."
-            android:padding="8dp" />
+            android:background="@drawable/searchbar_border"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawableEnd="@drawable/ic_clear"
+            android:fontFamily="@font/alkatra"
+            android:textSize="18dp"
+            android:hint="  Search for books..."
+            android:padding="10dp" />
 
         <!-- RecyclerView -->
+        <TextView
+            android:id="@+id/popularbooks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Popular Books"
+            android:textStyle="bold"
+            android:fontFamily="@font/alkatra" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewBooks"
             android:layout_width="match_parent"

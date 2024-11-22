@@ -93,16 +93,25 @@ public class SubscriptionRequests extends AppCompatActivity {
     }
 
     private void handleRequestAcceptance(SubReq request, int position) {
-        // Update user subscription in the database
         int newSubStatus = request.getReqType();
-        boolean isUpdated = databaseHelper.updateSubscriptionById(request.getId(), newSubStatus);
+        int userId = request.getId(); // Assuming request ID is the user ID.
+
+        // Update user subscription status
+        boolean isUpdated = databaseHelper.updateSubscriptionById(userId, newSubStatus);
 
         if (isUpdated) {
-            // Remove the request from the list and notify adapter
-            requestList.remove(position);
-            ((SimpleAdapter) requestListView.getAdapter()).notifyDataSetChanged();
-            databaseHelper.deleteSubRequestById(request.getId()); // if subscribed the request is deleted from the table
-            Toast.makeText(this, "Request accepted successfully", Toast.LENGTH_SHORT).show();
+            // Add user to subscribed_users table
+            boolean isSubscribed = databaseHelper.addSubscribedUser(userId, newSubStatus);
+
+            if (isSubscribed) {
+                // Remove request from list and database
+                requestList.remove(position);
+                ((SimpleAdapter) requestListView.getAdapter()).notifyDataSetChanged();
+                databaseHelper.deleteSubRequestById(userId);
+                Toast.makeText(this, "Subscription accepted and saved successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to save subscription details", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(this, "Failed to accept request", Toast.LENGTH_SHORT).show();
         }

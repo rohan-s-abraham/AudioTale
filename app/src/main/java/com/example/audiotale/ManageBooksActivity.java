@@ -59,4 +59,10 @@ public class ManageBooksActivity extends AppCompatActivity {
             Toast.makeText(this, "No books found", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadBooks(); // Reload book details when the activity resumes
+    }
 }

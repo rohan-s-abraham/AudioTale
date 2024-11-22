@@ -10,13 +10,16 @@ import android.util.Log;
 import com.example.audiotale.Book;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase.db";
-    private static final int DATABASE_VERSION = 5; // nerthe 4 arunn, athinu munne 3, athinu munne 2
+    private static final int DATABASE_VERSION = 6; // nerthe 5 arunn,...., athinu munne 3, athinu munne 2
 
     // Table and columns for Users
     private static final String TABLE_USERS = "users";
@@ -89,6 +92,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "FOREIGN KEY(" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + ")"
                 + ")";
         db.execSQL(CREATE_BOOK_REQUESTS_TABLE);
+
+        String CREATE_SUBSCRIBED_USERS_TABLE = "CREATE TABLE subscribed_users ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "user_id INTEGER NOT NULL, "
+                + "accepted_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+                + "end_date TIMESTAMP NOT NULL, "
+                + "FOREIGN KEY(user_id) REFERENCES users(id))";
+        db.execSQL(CREATE_SUBSCRIBED_USERS_TABLE);
     }
 
     @Override
@@ -126,6 +137,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + COLUMN_RELEASE_YEAR + " INTEGER, "
                     + COLUMN_REQUEST_DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP "+ ")";
             db.execSQL(CREATE_BOOK_REQUESTS_TABLE);
+        }
+
+        // Upgrade to version 6 (Add SubscribedUsers table)
+        if (oldVersion < 6) {
+            // Create the subscribed_users table during upgrade
+            String CREATE_SUBSCRIBED_USERS_TABLE = "CREATE TABLE subscribed_users ("
+                    + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "user_id INTEGER NOT NULL, "
+                    + "accepted_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+                    + "end_date TIMESTAMP NOT NULL, "
+                    + "FOREIGN KEY(user_id) REFERENCES users(id))";
+            db.execSQL(CREATE_SUBSCRIBED_USERS_TABLE);
         }
     }
 
@@ -574,6 +597,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return rowsDeleted > 0;
     }
+
+    public boolean addSubscribedUser(int userId, int subscriptionType) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("user_id", userId);
+
+        // Calculate end_date based on subscriptionType
+        long currentTime = System.currentTimeMillis();
+        long endTime;
+        if (subscriptionType == 1) { // Monthly
+            endTime = currentTime + (30L * 24 * 60 * 60 * 1000); // 30 days
+        } else if (subscriptionType == 2) { // Yearly
+            endTime = currentTime + (365L * 24 * 60 * 60 * 1000); // 365 days
+        } else {
+            return false; // Invalid subscription type
+        }
+
+        // Convert endTime to ISO 8601 format
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String endDateString = sdf.format(new Date(endTime));
+
+        values.put("end_date", endDateString);
+
+        // Insert into the database
+        long result = db.insert("subscribed_users", null, values);
+        db.close();
+        return result != -1; // Return true if insert was successful
+    }
+
+
 
 
 }

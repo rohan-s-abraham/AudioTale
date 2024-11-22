@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +24,8 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private String userEmail;
     private boolean isSubscribed;
+    private int currentUserId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     case R.id.nav_suggest:
                         // Handle Suggest Book action
-                        // Example: Navigate to suggest book activity
-                        // startActivity(new Intent(this, SuggestBookActivity.class));
+                        showSuggestBookDialog();
                         break;
                 }
 
@@ -169,6 +171,55 @@ public class ProfileActivity extends AppCompatActivity {
             }
         } else {
             Toast.makeText(this, "User email not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showSuggestBookDialog() {
+        // Create a custom dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Suggest a Book");
+
+        // Inflate a custom layout
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_suggest_book, null);
+        builder.setView(dialogView);
+
+        // Get input fields
+        EditText bookNameInput = dialogView.findViewById(R.id.book_name_input);
+        EditText authorNameInput = dialogView.findViewById(R.id.author_name_input);
+        EditText releaseYearInput = dialogView.findViewById(R.id.release_year_input);
+
+        // Set dialog buttons
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.setPositiveButton("Request Admin!", (dialog, which) -> {
+            String bookName = bookNameInput.getText().toString();
+            String authorName = authorNameInput.getText().toString();
+            String releaseYear = releaseYearInput.getText().toString();
+
+            // Validate inputs
+            if (bookName.isEmpty() || authorName.isEmpty() || releaseYear.isEmpty()) {
+                Toast.makeText(this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Add the book request to the database
+            addBookRequestToDatabase(bookName, authorName, Integer.parseInt(releaseYear));
+        });
+
+        // Show dialog
+        builder.create().show();
+    }
+
+    private void addBookRequestToDatabase(String bookName, String authorName, int releaseYear) {
+        SharedPreferences preferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        currentUserId = preferences.getInt("userId", 0);
+
+        long result = databaseHelper.addBookRequest(currentUserId, bookName, authorName, releaseYear);
+
+        if(result != 0){
+            Toast.makeText(this, "Request send successfully!", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "Request failed!", Toast.LENGTH_SHORT).show();
         }
     }
 }

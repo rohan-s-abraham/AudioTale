@@ -14,12 +14,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -73,13 +76,34 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                top10BooksAdapter.getFilter().filter(charSequence);
-//                popularBooksAdapter.getFilter().filter(charSequence);
+                if (booksAdapter != null) {
+                    booksAdapter.filter(charSequence.toString()); // Filter books
+                }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
+        // Set a TouchListener to clear the text when clicking drawableRight
+        searchBar.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (searchBar.getRight() - searchBar.getCompoundDrawables()[2].getBounds().width())) {
+                    searchBar.setText(""); // Clear the text
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // Ensure both drawables are set and preserved
+        searchBar.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_search, // DrawableLeft
+                0,                   // DrawableTop
+                R.drawable.ic_clear, // DrawableRight
+                0                    // DrawableBottom
+        );
+
 
 
         loadBooks();

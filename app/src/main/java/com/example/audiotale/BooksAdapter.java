@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> {
 
-    private List<Book> books;
+    private List<Book> books; // Original list of books
+    private List<Book> filteredBooks; // List used for displaying filtered results
     private OnBookClickListener listener;
 
     public interface OnBookClickListener {
@@ -21,6 +23,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
     public BooksAdapter(List<Book> books, OnBookClickListener listener) {
         this.books = books;
+        this.filteredBooks = new ArrayList<>(books); // Initialize with all books
         this.listener = listener;
     }
 
@@ -33,7 +36,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
-        Book book = books.get(position);
+        Book book = filteredBooks.get(position); // Use filtered list
         holder.textViewName.setText(book.getName());
         holder.imageViewCover.setImageBitmap(Utils.getImage(book.getCoverPhoto()));
         holder.bookabstract.setText(book.getBookAbstract());
@@ -44,7 +47,23 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
     @Override
     public int getItemCount() {
-        return books.size();
+        return filteredBooks.size(); // Use filtered list
+    }
+
+    // Method to filter books based on search query
+    public void filter(String query) {
+        filteredBooks.clear();
+        if (query == null || query.trim().isEmpty()) {
+            filteredBooks.addAll(books); // Show all books if query is empty
+        } else {
+            String lowerCaseQuery = query.toLowerCase();
+            for (Book book : books) {
+                if (book.getName().toLowerCase().contains(lowerCaseQuery)) {
+                    filteredBooks.add(book);
+                }
+            }
+        }
+        notifyDataSetChanged(); // Update the RecyclerView
     }
 
     public static class BookViewHolder extends RecyclerView.ViewHolder {

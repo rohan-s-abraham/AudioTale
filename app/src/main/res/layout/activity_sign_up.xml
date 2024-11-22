@@ -114,7 +114,8 @@
                 android:backgroundTint="#288AD8"
                 android:text="Sign Up"
                 android:fontFamily="@font/alkatra"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:background="@drawable/rounded_button"/>
 
             <!-- Log in prompt -->
         </LinearLayout>
