@@ -37,7 +37,8 @@
             android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:fontFamily="@font/alkatra"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/textView2"
@@ -59,18 +60,6 @@
 
         <!-- Email TextView -->
 
-        <!-- Subscription Status -->
-
-        <TextView
-            android:id="@+id/subscriptionStatusTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
-            android:text="You are not subscribed to audiotale"
-            android:textColor="@android:color/black"
-            android:textSize="18dp"
-            android:visibility="gone" />
 
         <!-- Update Profile Button -->
 
@@ -78,7 +67,7 @@
 
         <Space
             android:layout_width="362dp"
-            android:layout_height="36dp" />
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/updateProfileButton"
@@ -91,6 +80,21 @@
             android:text="Update Profile"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
+
+        <!-- Subscription Status -->
+
+        <TextView
+            android:id="@+id/subscriptionStatusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="You are not subscribed to audiotale"
+            android:textColor="@android:color/black"
+            android:textSize="18dp"
+            android:visibility="visible" />
+
 
         <Button
             android:id="@+id/addSubscriptionButton"

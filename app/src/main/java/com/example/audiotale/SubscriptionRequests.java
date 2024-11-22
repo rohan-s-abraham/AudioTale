@@ -108,7 +108,7 @@ public class SubscriptionRequests extends AppCompatActivity {
                 requestList.remove(position);
                 ((SimpleAdapter) requestListView.getAdapter()).notifyDataSetChanged();
                 databaseHelper.deleteSubRequestById(userId);
-                Toast.makeText(this, "Subscription accepted and saved successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Subscription accepted & saved successfully", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Failed to save subscription details", Toast.LENGTH_SHORT).show();
             }

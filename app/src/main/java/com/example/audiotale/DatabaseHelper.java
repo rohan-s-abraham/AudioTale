@@ -626,7 +626,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1; // Return true if insert was successful
     }
 
+    public SubscriptionDetails getSubscriptionDetails(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("subscribed_users", null, "user_id = ?", new String[]{String.valueOf(userId)}, null, null, null);
+
+        SubscriptionDetails details = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            // Check if the column index is valid
+            int acceptedDateIndex = cursor.getColumnIndex("accepted_date");
+            int endDateIndex = cursor.getColumnIndex("end_date");
+
+            if (acceptedDateIndex >= 0 && endDateIndex >= 0) {
+                details = new SubscriptionDetails(
+                        cursor.getString(acceptedDateIndex),
+                        cursor.getString(endDateIndex)
+                );
+            }
+            cursor.close();
+        }
+        db.close();
+        return details;
+    }
+
+    public String getSubscriptionEndDate(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT end_date FROM subscribed_users WHERE user_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        String endDate = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            // Check if the column index is valid
+            int endDateIndex = cursor.getColumnIndex("end_date");
+            if (endDateIndex >= 0) {
+                endDate = cursor.getString(endDateIndex);
+            }
+            cursor.close();
+        }
+        db.close();
+        return endDate;
+    }
 
 
+    public boolean deleteSubscription(int userId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete("subscribed_users", "user_id = ?", new String[]{String.valueOf(userId)});
+        db.close();
+        return rowsDeleted > 0;
+    }
 
 }

@@ -131,17 +131,22 @@ public class ProfileActivity extends AppCompatActivity {
                 isSubscribed = user.getSubscription() > 0;
 
                 if (isSubscribed) {
-                    if(user.getSubscription()==1){ //1 for monthly subscription
-                        addSubscriptionButton.setVisibility(View.GONE);
-                        subscriptionStatusTextView.setText("You Have Subscribed to Montly Plan!");
-                        subscriptionStatusTextView.setTextColor(Color.rgb(50, 205, 50));
-                        subscriptionStatusTextView.setVisibility(View.VISIBLE);
-                    }else {
-                        addSubscriptionButton.setVisibility(View.GONE);
-                        subscriptionStatusTextView.setText("You Have Subscribed to Yearly Plan!");
-                        subscriptionStatusTextView.setTextColor(Color.rgb(50, 205, 50));
-                        subscriptionStatusTextView.setVisibility(View.VISIBLE);
+                    // Fetch subscription details (end date)
+                    String subscriptionEndDate = databaseHelper.getSubscriptionEndDate(user.getId());
+
+                    // Format the message for subscription status
+                    String subscriptionMessage = "";
+                    if(user.getSubscription() == 1) { // 1 for monthly subscription
+                        subscriptionMessage = "You Have Subscribed to Monthly Plan!"+"\n \n"+" Expires on: " + subscriptionEndDate;
+                    } else { // Yearly subscription
+                        subscriptionMessage = "You Have Subscribed to Yearly Plan!"+"\n \n"+" Expires on: " + subscriptionEndDate;
                     }
+
+                    // Update UI
+                    addSubscriptionButton.setVisibility(View.GONE);
+                    subscriptionStatusTextView.setText(subscriptionMessage);
+                    subscriptionStatusTextView.setTextColor(Color.rgb(50, 205, 50)); // Green color
+                    subscriptionStatusTextView.setVisibility(View.VISIBLE);
                 } else {
                     addSubscriptionButton.setVisibility(View.VISIBLE);
                     subscriptionStatusTextView.setVisibility(View.GONE);

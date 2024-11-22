@@ -47,14 +47,15 @@ public class UserManagementActivity extends AppCompatActivity {
             // Convert subscription to "Yes" or "No"
             String subscriptionStatus;
             if (user.getSubscription() > 0) {
-                if(user.getSubscription() == 1){
+                if (user.getSubscription() == 1) {
                     subscriptionStatus = "Yes (Monthly)";
-                }else{
+                } else {
                     subscriptionStatus = "Yes (Yearly)";
                 }
-
+                userMap.put("showEye", "true"); // Flag to show the eye icon
             } else {
                 subscriptionStatus = "No";
+                userMap.put("showEye", "false"); // Flag to hide the eye icon
             }
             userMap.put("subscription", "Subscribed: " + subscriptionStatus);
 
@@ -68,19 +69,62 @@ public class UserManagementActivity extends AppCompatActivity {
                 R.layout.user_list_item,
                 new String[]{"name", "email", "subscription"},
                 new int[]{R.id.userNameTextView, R.id.userEmailTextView, R.id.userSubscriptionTextView}
-        );
-
-        userListView.setAdapter(adapter);
-
-        // Set up delete icon listener
-        userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ) {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public View getView(int position, View convertView, android.view.ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                // Set visibility of the eye icon based on subscription status
+                ImageView eyeIcon = view.findViewById(R.id.viewUserIcon);
+                String showEye = userList.get(position).get("showEye");
+                if ("true".equals(showEye)) {
+                    eyeIcon.setVisibility(View.VISIBLE);
+                    eyeIcon.setOnClickListener(v -> showUserDetailsDialog(users.get(position)));
+                } else {
+                    eyeIcon.setVisibility(View.GONE);
+                }
+
+                // Set up delete icon listener
                 ImageView deleteIcon = view.findViewById(R.id.deleteUserIcon);
                 deleteIcon.setOnClickListener(v -> showDeleteConfirmationDialog(users.get(position).getId(), position));
+
+                return view;
             }
-        });
+        };
+
+        userListView.setAdapter(adapter);
     }
+
+    private void showUserDetailsDialog(User user) {
+        // Show user details in a dialog
+        SubscriptionDetails subscription = databaseHelper.getSubscriptionDetails(user.getId());
+
+        new AlertDialog.Builder(this)
+                .setTitle("User Details")
+                .setMessage(
+                        "Name: " + user.getName() + "\n" +
+                                "Subscription Type: " + (user.getSubscription() == 1 ? "Monthly" : "Yearly") + "\n" +
+                                "Starting Date: " + subscription.getAcceptedDate() + "\n" +
+                                "Ending Date: " + subscription.getEndDate()
+                )
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Revoke Subscription", (dialog, which) -> revokeSubscription(user))
+                .show();
+    }
+
+    private void revokeSubscription(User user) {
+        // Update the user's subscription in the database
+        boolean subscriptionRevoked = databaseHelper.updateSubscriptionById(user.getId(), 0);
+        boolean subscriptionDeleted = databaseHelper.deleteSubscription(user.getId());
+
+        if (subscriptionRevoked && subscriptionDeleted) {
+            loadUserList(); // Reload user list after revocation
+            Toast.makeText(this, "Subscription revoked successfully!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Failed to revoke subscription", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void showDeleteConfirmationDialog(int userId, int position) {
         // Create a confirmation dialog
