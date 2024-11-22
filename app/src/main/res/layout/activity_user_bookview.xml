@@ -50,36 +50,45 @@
             android:layout_height="1600dp"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <!-- Book name -->
-            <TextView
-                android:id="@+id/bookNameTextView"
-                android:layout_width="237dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <!-- Book abstract -->
-            <TextView
-                android:id="@+id/bookReleaseDate"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:layout_height="58dp"
+                android:orientation="horizontal">
+
+                <!-- Book name -->
+                <TextView
+                    android:id="@+id/bookNameTextView"
+                    android:layout_width="211dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <!-- Book abstract -->
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/bookReleaseDate"
+                    android:layout_width="94dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
 
             <TextView
                 android:id="@+id/bookAuthorName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView

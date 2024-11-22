@@ -1,5 +1,6 @@
 package com.example.audiotale;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -75,10 +76,20 @@ public class SubscriptionRequests extends AppCompatActivity {
                 ImageView acceptIcon = view.findViewById(R.id.acceptRequestIcon);
                 ImageView deleteIcon = view.findViewById(R.id.deleteRequestIcon);
 
-                acceptIcon.setOnClickListener(v -> handleRequestAcceptance(subRequests.get(position), position));
-                deleteIcon.setOnClickListener(v -> handleRequestDeletion(subRequests.get(position).getId(), position));
+                acceptIcon.setOnClickListener(v -> showAcceptenceConfirmationDialog(subRequests.get(position), position));
+                deleteIcon.setOnClickListener(v -> showDismissConfirmationDialog(subRequests.get(position).getId(), position));
             }
         });
+    }
+
+    private void showAcceptenceConfirmationDialog(SubReq request, int position) {
+        // Create a confirmation dialog
+        new AlertDialog.Builder(this)
+                .setTitle("Accept Request")
+                .setMessage("Are you sure you want to accept this subscription request?")
+                .setPositiveButton("Yes", (dialog, which) -> handleRequestAcceptance(request, position)) // If "Yes" is clicked, delete the user
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss()) // If "No" is clicked, dismiss the dialog
+                .show();
     }
 
     private void handleRequestAcceptance(SubReq request, int position) {
@@ -97,6 +108,16 @@ public class SubscriptionRequests extends AppCompatActivity {
         }
     }
 
+    private void showDismissConfirmationDialog(int requestId, int position) {
+        // Create a confirmation dialog
+        new AlertDialog.Builder(this)
+                .setTitle("Decline Request")
+                .setMessage("Are you sure you want to decline this subscription request?")
+                .setPositiveButton("Yes", (dialog, which) -> handleRequestDeletion(requestId, position)) // If "Yes" is clicked, delete the user
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss()) // If "No" is clicked, dismiss the dialog
+                .show();
+    }
+
     private void handleRequestDeletion(int requestId, int position) {
         // Delete the request from the database
         boolean isDeleted = databaseHelper.deleteSubRequestById(requestId);
@@ -105,7 +126,7 @@ public class SubscriptionRequests extends AppCompatActivity {
             // Remove the request from the list and notify adapter
             requestList.remove(position);
             ((SimpleAdapter) requestListView.getAdapter()).notifyDataSetChanged();
-            Toast.makeText(this, "Request deleted successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Request declined!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Failed to delete request", Toast.LENGTH_SHORT).show();
         }
