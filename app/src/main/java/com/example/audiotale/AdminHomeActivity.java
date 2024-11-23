@@ -2,10 +2,15 @@ package com.example.audiotale;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -88,16 +93,27 @@ public class AdminHomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the profile menu
-        getMenuInflater().inflate(R.menu.drawer_menu, menu);
+        // Inflate the menu
+        getMenuInflater().inflate(R.menu.profile_menu, menu);
+
+        // Get the "Logout" menu item
+        MenuItem logoutItem = menu.findItem(R.id.action_logout);
+
+        // Set a custom font for the menu item
+        Typeface customFont = ResourcesCompat.getFont(this, R.font.alkatra);
+        SpannableString styledTitle = new SpannableString(logoutItem.getTitle());
+        styledTitle.setSpan(new CustomTypefaceSpan("", customFont), 0, styledTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        logoutItem.setTitle(styledTitle);
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle menu item clicks
         int id = item.getItemId();
-        if (id == R.id.nav_logout) {
+        if (id == R.id.action_logout) {
             // Perform logout action
             logout();
             return true;
@@ -106,21 +122,22 @@ public class AdminHomeActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        // Handle logout functionality here
-        // Clear only session-related data in SharedPreferences
+        // Clear all session-related data in SharedPreferences
         SharedPreferences preferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isLoggedIn", false); // Set isLoggedIn to false
+        editor.clear();  // Clears all saved session data
         editor.apply();
 
         // Show a message confirming logout
         Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
 
-        // Redirect to LoginActivity and clear activity stack to prevent the user from returning with the back button
+        // Redirect to LoginActivity and clear activity stack to prevent user from returning with the back button
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // Clear back stack
         startActivity(intent);
+
         finish(); // Finish current activity
     }
+
 
 }

@@ -10,6 +10,7 @@
         android:layout_width="354dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +25,8 @@
             android:fontFamily="@font/alkatra"
             android:text="Manage Users"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:background="@drawable/rounded_button"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Space
@@ -39,7 +41,8 @@
             android:fontFamily="@font/alkatra"
             android:text="Manage Subscribed"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:background="@drawable/rounded_button"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Space
@@ -54,7 +57,8 @@
             android:fontFamily="@font/alkatra"
             android:text="Manage Books"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:background="@drawable/rounded_button"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Space
@@ -69,7 +73,8 @@
             android:fontFamily="@font/alkatra"
             android:text="Add Book"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:background="@drawable/rounded_button"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Space
@@ -84,7 +89,8 @@
             android:fontFamily="@font/alkatra"
             android:text="Subscription Requests"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:background="@drawable/rounded_button"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Space
@@ -99,7 +105,8 @@
             android:fontFamily="@font/alkatra"
             android:text="Book Requests"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:background="@drawable/rounded_button"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </LinearLayout>

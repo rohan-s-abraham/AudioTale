@@ -22,6 +22,7 @@ public class UserBookview extends AppCompatActivity {
 
     private TextView bookNameTextView, bookAuthorName, bookReleaseDate, bookAbstractTextView, bookStoryTextView, storyBegins;
     private ImageView bookCoverImageView, pauseAudioButton, playAudioButton, startOverButton;
+    private View divider2;
     private Button subscribeButton;
     private LinearLayout audioButtonsLayout;
     private DatabaseHelper dbHelper;
@@ -57,6 +58,7 @@ public class UserBookview extends AppCompatActivity {
         playAudioButton = findViewById(R.id.playAudioButton);
         pauseAudioButton = findViewById(R.id.pauseAudioButton);
         startOverButton = findViewById(R.id.startOverButton);
+        divider2 = findViewById(R.id.divider2);
 
         dbHelper = new DatabaseHelper(this);
 
@@ -176,6 +178,7 @@ public class UserBookview extends AppCompatActivity {
                 if (isSubscribed) {
                     // Show story if subscribed
                     audioButtonsLayout.setVisibility(View.VISIBLE);
+                    divider2.setVisibility(View.VISIBLE);
                     storyBegins.setVisibility(View.VISIBLE);
                     bookStoryTextView.setVisibility(View.VISIBLE);
                 } else {

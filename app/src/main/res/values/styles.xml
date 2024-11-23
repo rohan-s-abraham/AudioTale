@@ -6,4 +6,22 @@
         <item name="android:textSize">16sp</item> <!-- Text size -->
         <item name="android:padding">12dp</item> <!-- Padding inside the button -->
     </style>
+
+    <style name="CustomDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/rounded_dialog_background</item>
+        <item name="android:background">@drawable/rounded_dialog_background</item>
+        <item name="buttonBarButtonStyle">@style/CustomDialogButtonStyle</item>
+    </style>
+
+    <style name="CustomDialogButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:fontFamily">@font/alkatra</item>
+    </style>
+
+    <style name="CustomBottomNavText" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:fontFamily">@font/alkatra</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

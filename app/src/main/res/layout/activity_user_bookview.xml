@@ -91,7 +91,7 @@
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="?android:attr/listDivider" />
 
             <LinearLayout
@@ -146,21 +146,23 @@
             <View
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="0.5dp"
+                android:background="?android:attr/listDivider"
+                android:visibility="gone"/>
 
         <!-- Story or subscription button -->
             <TextView
                 android:id="@+id/storyBegins"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:fontFamily="@font/alkatra"
+                android:textSize="18dp"
                 android:text="Story begins Here.."
                 android:visibility="gone"/>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="30dp" />
 
             <TextView
             android:id="@+id/bookStoryTextView"
@@ -176,10 +178,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="@color/audiotaleblue"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:textColor="@color/white"
             android:fontFamily="@font/alkatra"
-            android:text="Subscribe to Read"
+            android:text="Read More . . ."
             android:background="@drawable/rounded_button"
             android:visibility="gone" />
 

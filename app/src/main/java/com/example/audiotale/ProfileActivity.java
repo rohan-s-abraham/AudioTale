@@ -179,12 +179,15 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void showSuggestBookDialog() {
-        // Create a custom dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Suggest a Book");
 
-        // Inflate a custom layout
+    private void showSuggestBookDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialogStyle);
+
+        // Inflate and set the custom title
+        View customTitle = getLayoutInflater().inflate(R.layout.dialog_title, null);
+        builder.setCustomTitle(customTitle); // Set the custom title
+
+        // Inflate and set the main dialog content
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_suggest_book, null);
         builder.setView(dialogView);
 
@@ -200,19 +203,17 @@ public class ProfileActivity extends AppCompatActivity {
             String authorName = authorNameInput.getText().toString();
             String releaseYear = releaseYearInput.getText().toString();
 
-            // Validate inputs
             if (bookName.isEmpty() || authorName.isEmpty() || releaseYear.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Add the book request to the database
             addBookRequestToDatabase(bookName, authorName, Integer.parseInt(releaseYear));
         });
 
-        // Show dialog
         builder.create().show();
     }
+
 
     private void addBookRequestToDatabase(String bookName, String authorName, int releaseYear) {
         SharedPreferences preferences = getSharedPreferences("UserSession", MODE_PRIVATE);

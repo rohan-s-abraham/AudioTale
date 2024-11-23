@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Book Name"
+        android:fontFamily="@font/alkatra"
         android:inputType="text" />
 
     <EditText
@@ -17,13 +18,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Author Name"
+        android:fontFamily="@font/alkatra"
         android:inputType="text" />
 
     <EditText
         android:id="@+id/release_year_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Release Year"
+        android:hint="Released Year"
+        android:fontFamily="@font/alkatra"
         android:inputType="number" />
 
 </LinearLayout>

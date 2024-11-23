@@ -79,9 +79,12 @@
             <!-- Add Book Button -->
             <Button
                 android:id="@+id/btnAddBook"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="@color/audiotaleblue"
                 android:text="Add Book" />
         </LinearLayout>
     </ScrollView>

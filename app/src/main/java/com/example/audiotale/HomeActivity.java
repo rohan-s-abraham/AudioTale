@@ -2,15 +2,19 @@ package com.example.audiotale;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -142,11 +146,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void showSuggestBookDialog() {
-        // Create a custom dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Suggest a Book");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialogStyle);
 
-        // Inflate a custom layout
+        // Inflate and set the custom title
+        View customTitle = getLayoutInflater().inflate(R.layout.dialog_title, null);
+        builder.setCustomTitle(customTitle); // Set the custom title
+
+        // Inflate and set the main dialog content
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_suggest_book, null);
         builder.setView(dialogView);
 
@@ -162,19 +168,18 @@ public class HomeActivity extends AppCompatActivity {
             String authorName = authorNameInput.getText().toString();
             String releaseYear = releaseYearInput.getText().toString();
 
-            // Validate inputs
             if (bookName.isEmpty() || authorName.isEmpty() || releaseYear.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Add the book request to the database
             addBookRequestToDatabase(bookName, authorName, Integer.parseInt(releaseYear));
         });
 
-        // Show dialog
         builder.create().show();
     }
+
+
 
     private void addBookRequestToDatabase(String bookName, String authorName, int releaseYear) {
         SharedPreferences preferences = getSharedPreferences("UserSession", MODE_PRIVATE);
@@ -209,30 +214,28 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    // Opens a new activity showing books under the selected category
-//    private void openCategoryActivity(String category) {
-//        Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
-//        intent.putExtra("CATEGORY_NAME", category);
-//        startActivity(intent);
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the profile menu
+        // Inflate the menu
         getMenuInflater().inflate(R.menu.profile_menu, menu);
+
+        // Get the "Logout" menu item
+        MenuItem logoutItem = menu.findItem(R.id.action_logout);
+
+        // Set a custom font for the menu item
+        Typeface customFont = ResourcesCompat.getFont(this, R.font.alkatra);
+        SpannableString styledTitle = new SpannableString(logoutItem.getTitle());
+        styledTitle.setSpan(new CustomTypefaceSpan("", customFont), 0, styledTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        logoutItem.setTitle(styledTitle);
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle menu item clicks
         int id = item.getItemId();
-//        if (id == R.id.action_profile) {
-//            // Navigate to Profile Activity
-//            Intent intent = new Intent(this, ProfileActivity.class);
-//             startActivity(intent);
-//            return true;
-//        } else
         if (id == R.id.action_logout) {
             // Perform logout action
             logout();
