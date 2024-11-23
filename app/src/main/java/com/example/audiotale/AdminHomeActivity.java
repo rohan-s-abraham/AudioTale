@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class AdminHomeActivity extends AppCompatActivity {
 
-    private Button usermng, bookmng, addbook, subreq, bookreq;
+    private Button usermng, subUsers, bookmng, addbook, subreq, bookreq;
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -28,6 +28,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         // Initialize views
         usermng = findViewById(R.id.usermng);
+        subUsers = findViewById(R.id.subUsers);
         bookmng = findViewById(R.id.bookmng);
         addbook = findViewById(R.id.addbook);
         subreq = findViewById(R.id.subreq);
@@ -39,16 +40,26 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         // Set up button click listeners
         usermng.setOnClickListener(v -> displayUserList());
+        subUsers.setOnClickListener(v -> displaySubList());
         bookmng.setOnClickListener(v -> displayBookList());
         addbook.setOnClickListener(v -> openAddBook());
         subreq.setOnClickListener(v -> displaySubReq());
         bookreq.setOnClickListener(v -> displayBookReq());
     }
 
+
+
     private void displayUserList() {
         // Intent to navigate to User Management Activity
         Intent intent = new Intent(AdminHomeActivity.this, UserManagementActivity.class);
         startActivity(intent);
+    }
+
+    private void displaySubList() {
+        // Intent to navigate to Subscribed users Activity
+        Intent intent = new Intent(AdminHomeActivity.this, SubscribedUsersActivity.class);
+        startActivity(intent);
+
     }
 
     private void displayBookList() {

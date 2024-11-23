@@ -674,4 +674,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowsDeleted > 0;
     }
 
+
+    public List<SubscribedUser> getSubscribedUsers() {
+        List<SubscribedUser> subscribedUsers = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT u.username, u.email, s.end_date " +
+                "FROM subscribed_users s " +
+                "JOIN users u ON s.user_id = u.id " +
+                "ORDER BY s.end_date ASC";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+                    String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                    String endDate = cursor.getString(cursor.getColumnIndexOrThrow("end_date"));
+
+                    subscribedUsers.add(new SubscribedUser(username, email, endDate));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("DatabaseHelper", "Error retrieving subscribed users: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return subscribedUsers;
+    }
+
+
+
+
 }

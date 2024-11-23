@@ -19,7 +19,7 @@
         <Button
             android:id="@+id/usermng"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
+            android:layout_height="76dp"
             android:backgroundTint="@color/audiotaleblue"
             android:fontFamily="@font/alkatra"
             android:text="Manage Users"
@@ -32,15 +32,30 @@
             android:layout_height="12dp" />
 
         <Button
-            android:id="@+id/bookmng"
+            android:id="@+id/subUsers"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
+            android:layout_height="76dp"
             android:backgroundTint="@color/audiotaleblue"
-            android:text="Manage Books"
             android:fontFamily="@font/alkatra"
+            android:text="Manage Subscribed"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <Button
+            android:id="@+id/bookmng"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:backgroundTint="@color/audiotaleblue"
+            android:fontFamily="@font/alkatra"
+            android:text="Manage Books"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
@@ -49,13 +64,13 @@
         <Button
             android:id="@+id/addbook"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
+            android:layout_height="76dp"
             android:backgroundTint="@color/audiotaleblue"
-            android:text="Add Book"
             android:fontFamily="@font/alkatra"
+            android:text="Add Book"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
@@ -64,7 +79,7 @@
         <Button
             android:id="@+id/subreq"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
+            android:layout_height="76dp"
             android:backgroundTint="@color/audiotaleblue"
             android:fontFamily="@font/alkatra"
             android:text="Subscription Requests"
@@ -79,7 +94,7 @@
         <Button
             android:id="@+id/bookreq"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
+            android:layout_height="76dp"
             android:backgroundTint="@color/audiotaleblue"
             android:fontFamily="@font/alkatra"
             android:text="Book Requests"
