@@ -16,13 +16,16 @@
             android:id="@+id/back_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_back_arrow"
-            android:layout_margin="16dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:contentDescription="Back Button"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:clickable="true"
-            android:focusable="true" />
+            android:contentDescription="Back Button"
+            android:focusable="true"
+            android:src="@drawable/ic_back_arrow" />
 
         <!-- Title Text -->
         <TextView

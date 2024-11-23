@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,8 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize views
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
-        Button loginButton = findViewById(R.id.loginButton);
+        Button loginButton = findViewById(R.id.ChangeButton);
         TextView signUpPrompt = findViewById(R.id.sign_up_prompt);
+        TextView forget_password = findViewById(R.id.forget_password);
 
         // Initialize the database helper
         databaseHelper = new DatabaseHelper(this);
@@ -66,6 +68,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Set up forget password
+        forget_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, ForgetPasswordPage1.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void loginUser() {
@@ -75,6 +86,12 @@ public class LoginActivity extends AppCompatActivity {
         // Validate input fields
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate email format
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
             return;
         }
 

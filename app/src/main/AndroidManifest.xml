@@ -13,6 +13,22 @@
         android:theme="@style/Theme.AUDIOTALE"
         tools:targetApi="31">
         <activity
+            android:name=".ForgetPasswordPage2"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ForgetPasswordPage1"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".SubscribedUsersActivity"
             android:exported="false">
             <meta-data
