@@ -245,6 +245,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;  // Return null if no username is found
     }
 
+    // returns Id when passing email
+//    public Integer getUserIdByEmail(String email) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = null;
+//        Integer userId = null;
+//
+//        try {
+//            cursor = db.query(
+//                    "users",                     // Table name
+//                    new String[]{"id"},          // Column to fetch
+//                    "email=?",                   // WHERE clause
+//                    new String[]{email},         // Arguments for WHERE clause
+//                    null, null, null             // Group By, Having, Order By (not needed here)
+//            );
+//
+//            if (cursor != null && cursor.moveToFirst()) {  // Ensure the cursor moves to the first row
+//                userId = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+//            } else {
+//                Log.d("Debug", "No user found for email: " + email);
+//            }
+//        } catch (Exception e) {
+//            Log.e("Debug", "Error fetching user ID: " + e.getMessage());
+//        } finally {
+//            if (cursor != null) {
+//                cursor.close();  // Always close the cursor
+//            }
+//            db.close();          // Close the database
+//        }
+//
+//        return userId;  // Return null if no user ID is found
+//    }
+
+    //returns subscription type when Id is passed
+    public Integer getSubscriptionTypeById(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                "users",                          // Table name
+                new String[]{"sub"}, // Column to fetch
+                "id=?",                           // WHERE clause
+                new String[]{String.valueOf(userId)}, // Arguments for WHERE clause
+                null, null, null                  // Group By, Having, Order By (not needed here)
+        );
+
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {  // Ensure the cursor moves to the first row
+                    int subscriptionType = cursor.getInt(cursor.getColumnIndexOrThrow("sub"));
+                    return subscriptionType;
+                } else {
+                    Log.d("Debug", "No subscription type found for user ID: " + userId);
+                }
+            } finally {
+                cursor.close();  // Always close the cursor in the finally block
+            }
+        } else {
+            Log.d("Debug", "Cursor is null for user ID: " + userId);
+        }
+
+        return null;  // Return null if no subscription type is found
+    }
+
+
+
     public boolean deleteUserById(int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         int rowsAffected = db.delete("users", "id = ?", new String[]{String.valueOf(userId)});
@@ -675,11 +738,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    // For the Subscribed user activity
     public List<SubscribedUser> getSubscribedUsers() {
         List<SubscribedUser> subscribedUsers = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT u.username, u.email, s.end_date " +
+        String query = "SELECT u.id, u.username, u.email, u.sub, s.accepted_date, s.end_date " +
                 "FROM subscribed_users s " +
                 "JOIN users u ON s.user_id = u.id " +
                 "ORDER BY s.end_date ASC";
@@ -689,11 +753,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             if (cursor.moveToFirst()) {
                 do {
+                    Integer id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
                     String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
                     String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                    Integer sub = cursor.getInt(cursor.getColumnIndexOrThrow("sub"));
+                    String acceptedDate = cursor.getString(cursor.getColumnIndexOrThrow("accepted_date"));
                     String endDate = cursor.getString(cursor.getColumnIndexOrThrow("end_date"));
 
-                    subscribedUsers.add(new SubscribedUser(username, email, endDate));
+                    subscribedUsers.add(new SubscribedUser(id, username, email, sub, acceptedDate, endDate));
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
