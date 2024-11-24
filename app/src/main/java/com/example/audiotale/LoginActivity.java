@@ -89,12 +89,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Validate email format
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         if (email.equals("admin") && password.equals("admin")) {
             // Redirect to AdminHomeActivity after successful login
             Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
