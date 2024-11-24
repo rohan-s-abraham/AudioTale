@@ -137,6 +137,21 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="52dp"
             app:srcCompat="@drawable/launcher" />
+
+        <TextView
+            android:id="@+id/Notice"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="37dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="140dp"
+            android:background="#4DEFECEC"
+            android:backgroundTint="#9FE4E3E3"
+            android:text="NOTE : AudioTale recommend you to set-up a strong password. Try to include numbers and special characters(@ # $ _)"
+            android:textColor="#F8000000" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
