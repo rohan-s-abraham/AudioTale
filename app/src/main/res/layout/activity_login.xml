@@ -15,26 +15,29 @@
         tools:context=".LoginActivity">
 
         <!-- Welcome Text -->
+
+        <!-- Login Form -->
+
         <TextView
             android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="136dp"
             android:fontFamily="@font/alkatra"
             android:text="Sign In"
             android:textColor="@android:color/white"
             android:textSize="38sp"
             android:textStyle="bold" />
 
-        <!-- Login Form -->
         <LinearLayout
             android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/welcome_text"
             android:layout_centerVertical="true"
-            android:layout_marginTop="78dp"
+            android:layout_marginTop="29dp"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="16dp">
@@ -78,8 +81,10 @@
                     android:id="@+id/forget_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/alkatra"
                     android:text="Forget password"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <Button
@@ -87,11 +92,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="#288AD8"
-                android:text="Log In"
                 android:fontFamily="@font/alkatra"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rounded_button"/>
+                android:text="Login"
+                android:textColor="@android:color/white" />
 
             <!-- Sign up prompt -->
             <TextView
@@ -101,10 +106,21 @@
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:fontFamily="@font/alkatra"
                 android:gravity="center"
-                android:text="Don't have an account? Sign up"
-                android:textColor="@android:color/white" />
+                android:text="Don't have an account? Sign up!"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="309dp"
+            android:layout_height="105dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="52dp"
+            app:srcCompat="@drawable/launcher" />
     </RelativeLayout>
 
 

@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background"
-        tools:context=".SignUpActivity">
+        tools:context=".SignUpActivity"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="68dp">
 
         <!-- Back Button -->
         <ImageView
@@ -28,41 +30,45 @@
             android:src="@drawable/ic_back_arrow" />
 
         <!-- Title Text -->
+
+        <!-- Sign Up Form -->
+
+
         <TextView
             android:id="@+id/sign_up_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="80dp"
-            android:text="Sign Up"
+            android:layout_marginTop="137dp"
             android:fontFamily="@font/alkatra"
+            android:text="Sign Up"
             android:textColor="@android:color/white"
             android:textSize="38sp"
             android:textStyle="bold" />
 
-        <!-- Sign Up Form -->
         <LinearLayout
             android:id="@+id/sign_up_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="16dp"
             android:layout_below="@id/sign_up_title"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <!-- Full Name Input -->
             <EditText
                 android:id="@+id/usernameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:drawableLeft="@drawable/ic_person"
+                android:drawablePadding="10dp"
                 android:hint="Name"
                 android:padding="12dp"
-                android:background="@drawable/edit_text_background"
                 android:textColor="@android:color/white"
-                android:textColorHint="#D3D3D3"
-                android:drawableLeft="@drawable/ic_person"
-                android:drawablePadding="10dp" />
+                android:textColorHint="#D3D3D3" />
 
             <!-- Email Input -->
             <EditText
@@ -70,13 +76,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_background"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawablePadding="10dp"
                 android:hint="Email"
                 android:padding="12dp"
-                android:background="@drawable/edit_text_background"
                 android:textColor="@android:color/white"
-                android:textColorHint="#D3D3D3"
-                android:drawableLeft="@drawable/ic_email"
-                android:drawablePadding="10dp" />
+                android:textColorHint="#D3D3D3" />
 
             <!-- Password Input -->
             <EditText
@@ -84,14 +90,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:hint="Password"
-                android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColor="@android:color/white"
-                android:textColorHint="#D3D3D3"
-                android:inputType="textPassword"
                 android:drawableLeft="@drawable/ic_password"
-                android:drawablePadding="10dp" />
+                android:drawablePadding="10dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="#D3D3D3" />
 
             <!-- Confirm Password Input -->
             <EditText
@@ -99,14 +105,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:hint="Confirm Password"
-                android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColor="@android:color/white"
-                android:textColorHint="#D3D3D3"
-                android:inputType="textPassword"
                 android:drawableLeft="@drawable/ic_password"
-                android:drawablePadding="10dp" />
+                android:drawablePadding="10dp"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="#D3D3D3" />
 
             <!-- Sign Up Button -->
             <Button
@@ -114,14 +120,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_button"
                 android:backgroundTint="#288AD8"
-                android:text="Sign Up"
                 android:fontFamily="@font/alkatra"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rounded_button"/>
+                android:text="Sign Up"
+                android:textColor="@android:color/white" />
 
             <!-- Log in prompt -->
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="309dp"
+            android:layout_height="105dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="52dp"
+            app:srcCompat="@drawable/launcher" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
