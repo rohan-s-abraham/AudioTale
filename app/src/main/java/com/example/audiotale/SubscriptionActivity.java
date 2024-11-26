@@ -27,7 +27,7 @@ public class SubscriptionActivity extends AppCompatActivity {
 
         // Change the color of the status bar
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.audiotaleblue));
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.subStat));
         }
 
 
