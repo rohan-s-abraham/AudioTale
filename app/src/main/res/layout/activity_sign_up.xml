@@ -29,11 +29,6 @@
             android:focusable="true"
             android:src="@drawable/ic_back_arrow" />
 
-        <!-- Title Text -->
-
-        <!-- Sign Up Form -->
-
-
         <TextView
             android:id="@+id/sign_up_title"
             android:layout_width="wrap_content"

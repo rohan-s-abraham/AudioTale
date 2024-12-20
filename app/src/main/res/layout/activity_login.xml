@@ -14,9 +14,6 @@
         android:background="@drawable/gradient_background"
         tools:context=".LoginActivity">
 
-        <!-- Welcome Text -->
-
-        <!-- Login Form -->
 
         <TextView
             android:id="@+id/welcome_text"
@@ -122,8 +119,5 @@
             android:layout_marginTop="52dp"
             app:srcCompat="@drawable/launcher" />
     </RelativeLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

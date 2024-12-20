@@ -58,13 +58,6 @@
             android:padding="12dp"
             android:textSize="20sp" />
 
-        <!-- Email TextView -->
-
-
-        <!-- Update Profile Button -->
-
-        <!-- Add Subscription Button -->
-
         <Space
             android:layout_width="362dp"
             android:layout_height="wrap_content" />

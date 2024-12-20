@@ -37,20 +37,6 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-<!--        <Button-->
-<!--            android:id="@+id/btn_monthly"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Subscribe Monthly"-->
-<!--            android:layout_marginTop="16dp"/>-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btn_yearly"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Subscribe Yearly"-->
-<!--            android:layout_marginTop="16dp"/>-->
-
         <ImageView
             android:id="@+id/monthly_view"
             android:layout_width="wrap_content"
