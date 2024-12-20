@@ -75,7 +75,6 @@ public class ForgetPasswordPage1 extends AppCompatActivity {
         }
 
         if (databaseHelper.checkUserExistance(username, email)) {
-            //Toast.makeText(this, "Welcome Onboard!", Toast.LENGTH_SHORT).show();
             // Redirect to new password activity
             Intent intent = new Intent(this, ForgetPasswordPage2.class);
             intent.putExtra("email",email);

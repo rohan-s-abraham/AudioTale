@@ -19,7 +19,7 @@ import java.util.Locale;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "UserDatabase.db";
-    private static final int DATABASE_VERSION = 6; // nerthe 5 arunn,...., athinu munne 3, athinu munne 2
+    private static final int DATABASE_VERSION = 6;
 
     // Table and columns for Users
     private static final String TABLE_USERS = "users";
@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_EMAIL = "email";
-    private static final String COLUMN_SUBSCRIPTION = "sub";  // New column for subscription
+    private static final String COLUMN_SUBSCRIPTION = "sub";
 
     // Table and columns for Books
     private static final String TABLE_BOOKS = "books";
@@ -46,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_BOOK_NAME_REQUEST = "book_name";
     private static final String COLUMN_AUTHOR_NAME = "author_name";
     private static final String COLUMN_RELEASE_YEAR = "release_year";
-    private static final String COLUMN_REQUEST_DATE = "request_date"; // Timestamp for current date
+    private static final String COLUMN_REQUEST_DATE = "request_date";
 
 
 
@@ -269,38 +269,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;  // Return null if no username is found
     }
 
-    // returns Id when passing email
-//    public Integer getUserIdByEmail(String email) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = null;
-//        Integer userId = null;
-//
-//        try {
-//            cursor = db.query(
-//                    "users",                     // Table name
-//                    new String[]{"id"},          // Column to fetch
-//                    "email=?",                   // WHERE clause
-//                    new String[]{email},         // Arguments for WHERE clause
-//                    null, null, null             // Group By, Having, Order By (not needed here)
-//            );
-//
-//            if (cursor != null && cursor.moveToFirst()) {  // Ensure the cursor moves to the first row
-//                userId = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-//            } else {
-//                Log.d("Debug", "No user found for email: " + email);
-//            }
-//        } catch (Exception e) {
-//            Log.e("Debug", "Error fetching user ID: " + e.getMessage());
-//        } finally {
-//            if (cursor != null) {
-//                cursor.close();  // Always close the cursor
-//            }
-//            db.close();          // Close the database
-//        }
-//
-//        return userId;  // Return null if no user ID is found
-//    }
-
     //returns subscription type when Id is passed
     public Integer getSubscriptionTypeById(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -441,13 +409,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 // Create User object with retrieved data
                 User user = new User(id, name, userEmail, subscriptionStatus);  // Pass all required parameters
 
-                // Return the user object after closing resources
                 return user;
             } catch (IllegalArgumentException e) {
-                e.printStackTrace();  // Log exception if column is not found
+                e.printStackTrace();
                 return null;
             } finally {
-                cursor.close();  // Ensure cursor is closed in all cases
+                cursor.close();
                 db.close();
             }
         } else {
@@ -798,8 +765,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return subscribedUsers;
     }
-
-
-
-
 }

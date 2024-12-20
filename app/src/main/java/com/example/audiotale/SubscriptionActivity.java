@@ -33,8 +33,6 @@ public class SubscriptionActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-//        Button btnMonthly = findViewById(R.id.btn_monthly);
-//        Button btnYearly = findViewById(R.id.btn_yearly);
         ImageView button_back = findViewById(R.id.back_button);
         ImageView monthly_view = findViewById(R.id.monthly_view);
         ImageView yearly_view = findViewById(R.id.yearly_view);

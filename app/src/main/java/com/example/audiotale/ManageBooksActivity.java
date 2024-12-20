@@ -26,24 +26,9 @@ public class ManageBooksActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-
-//        // Example: Clear all rows from the books table when the activity starts
-//        clearBooksTable();
-
         loadBooks();
     }
 
-//    private void clearBooksTable() {
-//
-//        // Get a writable database
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//
-//        // Delete all rows from the "books" table
-//        db.delete("books", null, null);  // Remove all records
-//
-//        // Optionally, close the database
-//        db.close();
-//    }
 
     private void loadBooks() {
         List<Book> books = dbHelper.getAllBooks();
