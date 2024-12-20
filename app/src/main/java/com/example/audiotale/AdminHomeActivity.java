@@ -40,7 +40,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         bookreq = findViewById(R.id.bookreq);
 
 
-        // Initialize the database helper (Optional: only if needed here)
+        // Initialize the database helper
         databaseHelper = new DatabaseHelper(this);
 
         // Set up button click listeners
@@ -80,13 +80,13 @@ public class AdminHomeActivity extends AppCompatActivity {
     }
 
     private void displaySubReq() {
-        // Intent to navigate to Add Book Activity
+        // Intent to navigate to Subscription request view Activity
         Intent intent = new Intent(AdminHomeActivity.this, SubscriptionRequests.class);
         startActivity(intent);
     }
 
     private void displayBookReq() {
-        // Intent to navigate to Add Book Activity
+        // Intent to navigate to Book request Activity
         Intent intent = new Intent(AdminHomeActivity.this, BookRequestview.class);
         startActivity(intent);
     }
